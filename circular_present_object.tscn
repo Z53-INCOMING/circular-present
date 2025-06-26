@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b310w1cmvprxw"]
+
+[ext_resource type="Script" uid="uid://dirh8o2yqcgfk" path="res://circular_present_object.gd" id="1_s7te3"]
+
+[node name="CircularPresentObject" type="Node2D"]
+script = ExtResource("1_s7te3")

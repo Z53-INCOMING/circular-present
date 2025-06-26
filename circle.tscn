@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://qn2fskulf78x"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ynql5"]
+friction = 0.83
+bounce = 0.14
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_amgc1"]
+radius = 64.0
+
+[node name="Circle" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_ynql5")
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_amgc1")
+
+[node name="Visual" type="Polygon2D" parent="."]
+antialiased = true
+polygon = PackedVector2Array(64, 0, 59.1283, 24.4917, 45.2548, 45.2548, 24.4917, 59.1283, -2.79753e-06, 64, -24.4917, 59.1283, -45.2548, 45.2548, -59.1283, 24.4917, -64, -5.59506e-06, -59.1283, -24.4917, -45.2548, -45.2548, -24.4917, -59.1283, 7.63192e-07, -64, 24.4918, -59.1283, 45.2548, -45.2548, 59.1283, -24.4917)
