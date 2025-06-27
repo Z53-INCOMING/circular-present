@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7vykttutoayb"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_8lkhj"]
+friction = 0.83
+bounce = 0.14
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2eeqm"]
+size = Vector2(128, 128)
+
+[node name="Square" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_8lkhj")
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_2eeqm")

@@ -85,6 +85,7 @@ color = Color(0.172549, 0.137255, 0.227451, 1)
 [node name="CircularPresentObject" parent="." instance=ExtResource("2_fj7yv")]
 position = Vector2(304, 432)
 color = Color(0.228265, 0.526167, 0.825856, 1)
+shape = 1
 
 [node name="CircularPresentObject2" parent="." instance=ExtResource("2_fj7yv")]
 position = Vector2(882, 421)

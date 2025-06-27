@@ -3,7 +3,12 @@ extends Node2D
 @onready var circular_object_scene := preload("res://circle.tscn")
 @onready var circular_visual_scene := preload("res://circle_visual.tscn")
 
+@onready var square_object_scene := preload("res://square.tscn")
+@onready var square_visual_scene := preload("res://square_visual.tscn")
+
 @export var color: Color = Color.WHITE
+## 0 is a circle, 1 is a square
+@export var shape := 0
 
 var present_resolution := 1
 
@@ -15,20 +20,33 @@ var selected := -1
 
 var uy_flipped := false
 
+var mouse_offset := Vector2.ZERO
+
 func _ready():
 	present_resolution = get_parent().present_resolution
 	present_radius = get_parent().present_radius
 	time_stiffness = get_parent().time_stiffness
 	
-	for i in present_resolution:
-		var circular_object: RigidBody2D = circular_object_scene.instantiate()
-		circular_object.collision_layer = int(pow(2.0, i))
-		circular_object.collision_mask = int(pow(2.0, i))
-		
-		add_child(circular_object)
+	var object_scene
+	var object_visual_scene
+	
+	match shape:
+		0:
+			object_scene = circular_object_scene
+			object_visual_scene = circular_visual_scene
+		1:
+			object_scene = square_object_scene
+			object_visual_scene = square_visual_scene
 	
 	for i in present_resolution:
-		var circular_visual: Polygon2D = circular_visual_scene.instantiate()
+		var object: RigidBody2D = object_scene.instantiate()
+		object.collision_layer = int(pow(2.0, i))
+		object.collision_mask = int(pow(2.0, i))
+		
+		add_child(object)
+	
+	for i in present_resolution:
+		var circular_visual: Polygon2D = object_visual_scene.instantiate()
 		
 		circular_visual.color = color
 		
@@ -63,6 +81,9 @@ func _process(delta):
 		var next_force := (next.global_position - current.global_position).normalized() * (next_distance - distance_between_present_objects)
 		
 		current.apply_central_impulse((previous_force + next_force) * 0.5 * delta * time_stiffness)
+		
+		var desired_rotation := lerp_angle(previous.rotation, next.rotation, 0.5)
+		current.apply_torque_impulse(angle_difference(current.rotation, desired_rotation) * delta * time_stiffness * 216.0)
 		
 		# Update the polygon
 		var polygon: Polygon2D = get_child(i + present_resolution)
@@ -109,8 +130,10 @@ func _input(event):
 				if uy_flipped:
 					if absf(get_global_mouse_position().x - closest_to_mouse.global_position.x) < 64.0:
 						selected = -2 if event.button_index == MOUSE_BUTTON_LEFT else camera_u_index
+						mouse_offset = get_global_mouse_position() - closest_to_mouse.global_position
 				else:
 					if get_global_mouse_position().distance_to(closest_to_mouse.global_position) < 64.0:
 						selected = -2 if event.button_index == MOUSE_BUTTON_LEFT else camera_u_index
+						mouse_offset = get_global_mouse_position() - closest_to_mouse.global_position
 			else:
 				selected = -1
