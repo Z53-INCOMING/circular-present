@@ -15,7 +15,7 @@ normal = Vector2(-1, 0)
 normal = Vector2(0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fj7yv"]
-size = Vector2(812, 541)
+size = Vector2(783, 551)
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_f3sb7")
@@ -65,13 +65,13 @@ collision_layer = 4294967295
 collision_mask = 4294967295
 
 [node name="Collider" type="CollisionShape2D" parent="Cliff"]
-position = Vector2(568, 844.5)
+position = Vector2(553.5, 839.5)
 shape = SubResource("RectangleShape2D_fj7yv")
 
 [node name="ColorRect" type="ColorRect" parent="Cliff"]
 offset_left = 162.0
 offset_top = 574.0
-offset_right = 974.0
+offset_right = 915.0
 offset_bottom = 1239.0
 color = Color(0.243137, 0.192157, 0.321569, 1)
 
@@ -81,6 +81,10 @@ offset_top = 527.0
 offset_right = 974.0
 offset_bottom = 603.0
 color = Color(0.172549, 0.137255, 0.227451, 1)
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.21511, 0.171135, 0.282763, 1)
+polygon = PackedVector2Array(974, 527, 974, 1048, 915, 1124, 915, 603)
 
 [node name="CircularPresentObject" parent="." instance=ExtResource("2_fj7yv")]
 position = Vector2(304, 432)
