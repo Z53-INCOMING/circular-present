@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bic1ahrl5wxa5"]
+[gd_scene load_steps=8 format=3 uid="uid://bic1ahrl5wxa5"]
 
 [ext_resource type="Script" uid="uid://bw8mmj7prf42q" path="res://world.gd" id="1_f3sb7"]
 [ext_resource type="PackedScene" uid="uid://b310w1cmvprxw" path="res://circular_present_object.tscn" id="2_fj7yv"]
@@ -13,6 +13,9 @@ normal = Vector2(-1, 0)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_aqk2v"]
 normal = Vector2(0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fj7yv"]
+size = Vector2(812, 541)
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_f3sb7")
@@ -57,12 +60,38 @@ shape = SubResource("WorldBoundaryShape2D_tlwt5")
 position = Vector2(1295, 208)
 shape = SubResource("WorldBoundaryShape2D_aqk2v")
 
+[node name="Cliff" type="StaticBody2D" parent="."]
+collision_layer = 4294967295
+collision_mask = 4294967295
+
+[node name="Collider" type="CollisionShape2D" parent="Cliff"]
+position = Vector2(568, 844.5)
+shape = SubResource("RectangleShape2D_fj7yv")
+
+[node name="ColorRect" type="ColorRect" parent="Cliff"]
+offset_left = 162.0
+offset_top = 574.0
+offset_right = 974.0
+offset_bottom = 1239.0
+color = Color(0.243137, 0.192157, 0.321569, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="Cliff"]
+offset_left = 162.0
+offset_top = 434.0
+offset_right = 974.0
+offset_bottom = 696.0
+color = Color(0.172549, 0.137255, 0.227451, 1)
+
 [node name="CircularPresentObject" parent="." instance=ExtResource("2_fj7yv")]
-position = Vector2(471, 838)
+position = Vector2(304, 432)
 color = Color(0.228265, 0.526167, 0.825856, 1)
 
 [node name="CircularPresentObject2" parent="." instance=ExtResource("2_fj7yv")]
-position = Vector2(705, 900)
+position = Vector2(882, 421)
+color = Color(0.438902, 0.368012, 0.329136, 1)
+
+[node name="CircularPresentObject4" parent="." instance=ExtResource("2_fj7yv")]
+position = Vector2(1747, 888)
 color = Color(0.846222, 0.334068, 0.351221, 1)
 
 [node name="CircularPresentObject3" parent="." instance=ExtResource("2_fj7yv")]

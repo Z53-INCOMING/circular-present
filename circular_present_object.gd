@@ -77,14 +77,26 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_accept"):
 		uy_flipped = !uy_flipped
 	
-	if selected != -1:
+	if selected > -1:
 		var closest_to_mouse = get_child(selected)
 		
-		closest_to_mouse.apply_central_impulse((get_global_mouse_position() - closest_to_mouse.global_position) * 0.5)
+		closest_to_mouse.apply_central_impulse((get_global_mouse_position() - closest_to_mouse.global_position) * delta * 216.0)
+		closest_to_mouse.linear_damp = 16.0
+	elif selected == -2:
+		for i in present_resolution:
+			var object = get_child(i)
+			
+			object.apply_central_impulse((get_global_mouse_position() - object.global_position) * delta * 216.0)
+			object.linear_damp = 16.0
+	else:
+		for i in present_resolution:
+			var object = get_child(i)
+			
+			object.linear_damp = 0.0
 
 func _input(event):
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT:
+		if event.button_index == MOUSE_BUTTON_LEFT or event.button_index == MOUSE_BUTTON_RIGHT:
 			if event.pressed:
 				var camera_u_index := int((get_parent().camera_u / TAU) * present_resolution)
 				if uy_flipped:
@@ -96,9 +108,9 @@ func _input(event):
 				
 				if uy_flipped:
 					if absf(get_global_mouse_position().x - closest_to_mouse.global_position.x) < 64.0:
-						selected = camera_u_index
+						selected = -2 if event.button_index == MOUSE_BUTTON_LEFT else camera_u_index
 				else:
 					if get_global_mouse_position().distance_to(closest_to_mouse.global_position) < 64.0:
-						selected = camera_u_index
+						selected = -2 if event.button_index == MOUSE_BUTTON_LEFT else camera_u_index
 			else:
 				selected = -1
