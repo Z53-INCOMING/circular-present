@@ -18,10 +18,6 @@ var time_stiffness := 1.0
 
 var selected := -1
 
-var uy_flipped := false
-
-var sharp_fade := true
-
 var mouse_offset := Vector2.ZERO
 
 func _ready():
@@ -55,7 +51,10 @@ func _ready():
 		add_child(circular_visual)
 
 func _process(delta):
-	var camera_u: float = get_parent().camera_u
+	var parent: Node2D = get_parent()
+	var camera_u: float = parent.camera_u
+	var uy_flipped: bool = parent.uy_flipped
+	var sharp_fade: bool = parent.sharp_fade
 	
 	var distance_between_present_objects := (present_radius * TAU) / present_resolution
 	
@@ -100,10 +99,8 @@ func _process(delta):
 			polygon.global_position.y = (1.0 - (i / float(present_resolution - 1))) * 1440.0
 			polygon.modulate.a = pow(1.0 - absf((current.global_position.y - ((camera_u / TAU) * 1440.0)) / 1440.0), 2.0)
 	
-	if Input.is_action_just_pressed("ui_accept"):
-		uy_flipped = !uy_flipped
-	if Input.is_action_just_pressed("toggle_sharp_fade"):
-		sharp_fade = !sharp_fade
+	if selected != -1 and Input.is_key_pressed(KEY_BACKSPACE):
+		queue_free()
 	
 	if selected > -1:
 		var closest_to_mouse = get_child(selected)
@@ -127,14 +124,14 @@ func _input(event):
 		if event.button_index == MOUSE_BUTTON_LEFT or event.button_index == MOUSE_BUTTON_RIGHT:
 			if event.pressed:
 				var camera_u_index := int((get_parent().camera_u / TAU) * present_resolution)
-				if uy_flipped:
+				if get_parent().uy_flipped:
 					camera_u_index = int((1.0 - (get_global_mouse_position().y / 1440.0)) * float(present_resolution))
 					if camera_u_index >= present_resolution:
 						camera_u_index = present_resolution - 1
 				
 				var closest_to_mouse = get_child(camera_u_index)
 				
-				if uy_flipped:
+				if get_parent().uy_flipped:
 					if absf(get_global_mouse_position().x - closest_to_mouse.global_position.x) < 64.0:
 						selected = -2 if event.button_index == MOUSE_BUTTON_LEFT else camera_u_index
 						mouse_offset = get_global_mouse_position() - closest_to_mouse.global_position

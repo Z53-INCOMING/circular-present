@@ -11,9 +11,43 @@ extends Node2D
 
 @export var camera_u := 0.0
 
+@onready var color_picker := $ColorPicker
+
+@onready var circular_present_object_scene := preload("res://circular_present_object.tscn")
+
+var uy_flipped := false
+
+var sharp_fade := true
+
 func _process(delta):
 	if Input.is_action_pressed("ui_up"):
 		camera_u += delta * 3.0
 	if Input.is_action_pressed("ui_down"):
 		camera_u -= delta * 3.0
 	camera_u = wrapf(camera_u, 0.0, TAU)
+	
+	if Input.is_action_just_pressed("toggle_color_picker"):
+		color_picker.visible = !color_picker.visible
+	
+	if Input.is_action_just_pressed("add_circle"):
+		var object := circular_present_object_scene.instantiate()
+		
+		object.color = color_picker.color
+		object.shape = 0
+		object.global_position = get_global_mouse_position()
+		
+		add_child(object)
+	
+	if Input.is_action_just_pressed("add_square"):
+		var object := circular_present_object_scene.instantiate()
+		
+		object.color = color_picker.color
+		object.shape = 1
+		object.global_position = get_global_mouse_position()
+		
+		add_child(object)
+	
+	if Input.is_action_just_pressed("ui_accept"):
+		uy_flipped = !uy_flipped
+	if Input.is_action_just_pressed("toggle_sharp_fade"):
+		sharp_fade = !sharp_fade

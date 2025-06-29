@@ -86,6 +86,14 @@ color = Color(0.172549, 0.137255, 0.227451, 1)
 color = Color(0.21511, 0.171135, 0.282763, 1)
 polygon = PackedVector2Array(974, 527, 974, 1048, 915, 1124, 915, 603)
 
+[node name="ColorPicker" type="ColorPicker" parent="."]
+visible = false
+offset_left = 21.0
+offset_top = 851.0
+offset_right = 319.0
+offset_bottom = 1423.0
+color = Color(0.941263, 0.328256, 0.877892, 1)
+
 [node name="CircularPresentObject" parent="." instance=ExtResource("2_fj7yv")]
 position = Vector2(304, 432)
 color = Color(0.228265, 0.526167, 0.825856, 1)
