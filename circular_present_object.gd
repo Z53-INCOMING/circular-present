@@ -20,6 +20,8 @@ var selected := -1
 
 var uy_flipped := false
 
+var sharp_fade := true
+
 var mouse_offset := Vector2.ZERO
 
 func _ready():
@@ -89,7 +91,10 @@ func _process(delta):
 		var polygon: Polygon2D = get_child(i + present_resolution)
 		
 		polygon.global_transform = current.global_transform
-		polygon.modulate.a = pow(1.0 - absf(angle_difference((float(i) / float(present_resolution)) * TAU - PI, camera_u - PI) / PI), 2.0)
+		if sharp_fade:
+			polygon.modulate.a = 1.0 if floorf(camera_u / TAU * present_resolution) == float(i) else 0.0
+		else:
+			polygon.modulate.a = pow(1.0 - absf(angle_difference((float(i) / float(present_resolution)) * TAU - PI, camera_u - PI) / PI), 2.0)
 		
 		if uy_flipped:
 			polygon.global_position.y = (1.0 - (i / float(present_resolution - 1))) * 1440.0
@@ -97,6 +102,8 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("ui_accept"):
 		uy_flipped = !uy_flipped
+	if Input.is_action_just_pressed("toggle_sharp_fade"):
+		sharp_fade = !sharp_fade
 	
 	if selected > -1:
 		var closest_to_mouse = get_child(selected)
