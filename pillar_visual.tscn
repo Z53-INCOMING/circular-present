@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://cdx1lhmobtxuf"]
+
+[node name="PillarVisual" type="Polygon2D"]
+polygon = PackedVector2Array(-256, -32, 256, -32, 256, 32, -256, 32)

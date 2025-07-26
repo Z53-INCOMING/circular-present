@@ -3,6 +3,9 @@ extends Node2D
 @onready var circular_object_scene := preload("res://circle.tscn")
 @onready var circular_visual_scene := preload("res://circle_visual.tscn")
 
+@onready var pillar_visual_scene := preload("res://pillar_visual.tscn")
+@onready var pillar_object_scene := preload("res://pillar.tscn")
+
 @onready var square_object_scene := preload("res://square.tscn")
 @onready var square_visual_scene := preload("res://square_visual.tscn")
 
@@ -35,6 +38,9 @@ func _ready():
 		1:
 			object_scene = square_object_scene
 			object_visual_scene = square_visual_scene
+		2:
+			object_scene = pillar_object_scene
+			object_visual_scene = pillar_visual_scene
 	
 	for i in present_resolution:
 		var object: RigidBody2D = object_scene.instantiate()
