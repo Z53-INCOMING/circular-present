@@ -24,6 +24,10 @@ func _process(delta):
 		camera_u += delta * 3.0
 	if Input.is_action_pressed("ui_down"):
 		camera_u -= delta * 3.0
+	if Input.is_action_just_released("scroll up"):
+		camera_u += TAU / 12.0
+	if Input.is_action_just_released("scroll down"):
+		camera_u -= TAU / 12.0
 	camera_u = wrapf(camera_u, 0.0, TAU)
 	
 	if Input.is_action_just_pressed("toggle_color_picker"):
